@@ -95,7 +95,7 @@ object CSVParser {
                 state = Field
                 pos += 2
               } else {
-                throw new MalformedCSVException(buf.mkString)
+                throw new MalformedCSVException("Record ends with escape character, or the character after the escape character is not escape character or deliminator: " + buf.mkString)
               }
             }
             case `delimiter` => {
@@ -136,7 +136,7 @@ object CSVParser {
                   state = Field
                   pos += 2
                 } else {
-                  throw new MalformedCSVException(buf.mkString)
+                  throw new MalformedCSVException("Record ends with escape character, or the character after the escape character is not escape character or deliminator:" + buf.mkString)
                 }
               } else {
                 state = QuoteEnd
@@ -181,10 +181,10 @@ object CSVParser {
                   state = QuotedField
                   pos += 2
                 } else {
-                  throw new MalformedCSVException(buf.mkString)
+                  throw new MalformedCSVException("Record ends with escape character, or the character after the escape character is not escape character or deliminator: " + buf.mkString)
                 }
               } else {
-                throw new MalformedCSVException(buf.mkString)
+                throw new MalformedCSVException("Record ends with beginning quotes: " + buf.mkString)
               }
             }
             case `quoteChar` => {
@@ -228,7 +228,7 @@ object CSVParser {
               pos += 1
             }
             case _ => {
-              throw new MalformedCSVException(buf.mkString)
+              throw new MalformedCSVException("The character after end of quotes is not deliminator or break" + buf.mkString)
             }
           }
         }
@@ -242,10 +242,10 @@ object CSVParser {
                   state = QuotedField
                   pos += 2
                 } else {
-                  throw new MalformedCSVException(buf.mkString)
+                  throw new MalformedCSVException("Record ends with escape character, or the character after the escape character is not escape character or deliminator: " + buf.mkString)
                 }
               } else {
-                throw new MalformedCSVException(buf.mkString)
+                throw new MalformedCSVException("Record ends with quoted field: " + buf.mkString)
               }
             }
             case `quoteChar` => {
